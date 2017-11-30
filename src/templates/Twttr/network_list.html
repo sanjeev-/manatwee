@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1> networks </h1>
+<ul>
+    {% for obj in network_list %}
+    <li> {{obj.name}}  {{obj.location}}  {{obj.category}} </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

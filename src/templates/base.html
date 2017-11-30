@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'snippets/css.html' %}
+</head>
+
+<body>
+{% include 'snippets/nav.html' %}
+    <div class='container'><div class='col-sm-2'> <p> nav bar </p><p> nav bar </p><p> nav bar </p> </div></div>
+    <div class='col-sm-10'> 
+    <div class='container'>
+    {% block content %}
+    {% endblock content %}    
+        </div> </div>
+    {% include 'snippets/js.html' %}
+    </body>
+</html>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>{{object.name}} <small>{{object.network}}</small></h1>
+<p><small>{{object.genre}} {{object.category}}</small></p>
+<p><small>{{object.timestamp}}, {{object.updated|timesince}} ago</small></p>
+
+{% endblock content %}

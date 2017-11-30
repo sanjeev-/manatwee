@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1> shows </h1>
+<ul>
+    {% for obj in show_list %}
+    <li><a href='/show/{{ obj.slug }}/'>{{obj}}</a><br/>
+        {{obj.name}}  {{obj.network}} </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
