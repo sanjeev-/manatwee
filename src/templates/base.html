@@ -2,16 +2,28 @@
 <html>
 <head>
     {% include 'snippets/css.html' %}
+        {% include 'snippets/js.html' %}
 </head>
 
 <body>
 {% include 'snippets/nav.html' %}
-    <div class='container'><div class='col-sm-2'> <p> nav bar </p><p> nav bar </p><p> nav bar </p> </div></div>
-    <div class='col-sm-10'> 
     <div class='container'>
+        <div class='row'>
+            <div class='col-sm-2'> 
+                <p> </p>
+            {% for obj in show_list %}
+                        <a href='/show/{{ obj.slug }}/'>{{obj}}</a>
+                        <p> </p>
+            {% endfor %}
+        
+            </div>
+    <div class='col-sm-10'> 
     {% block content %}
+
     {% endblock content %}    
-        </div> </div>
-    {% include 'snippets/js.html' %}
+            </div>
+        </div>
+
+    </div>
     </body>
 </html>

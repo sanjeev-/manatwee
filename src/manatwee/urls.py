@@ -16,17 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
+from twttr.views import NetworkListView, ShowListView, ShowDetailView, HomeListView,AboutListView, ContactListView,homeviewfunc, aboutviewfunc, contactviewfunc,showdetailfunc
 
-from twttr.views import NetworkListView, ShowListView, ShowDetailView
 
 #from twttr.views import HomeView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$',TemplateView.as_view(template_name='base.html')),
-    url(r'^about/$',TemplateView.as_view(template_name='about.html')),
-    url(r'^contact/$',TemplateView.as_view(template_name='contact.html')),
+    url(r'^$',homeviewfunc),
+    url(r'^about/$',aboutviewfunc),
+    url(r'^contact/$',contactviewfunc),
     url(r'^network/$',NetworkListView.as_view()),
-    url(r'^shows/$',ShowListView.as_view()),
-    url(r'^show/(?P<slug>[\w-]+)/$',ShowDetailView.as_view()),
+    url(r'^show/(?P<slug>[\w-]+)/$',showdetailfunc),
 ]

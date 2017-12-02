@@ -3,8 +3,11 @@
 
 {% block content %}
 
-<h1>{{object.name}} <small>{{object.network}}</small></h1>
-<p><small>{{object.genre}} {{object.category}}</small></p>
-<p><small>{{object.timestamp}}, {{object.updated|timesince}} ago</small></p>
+<div class='container' id="d2">
+    <h1>{{show.name}} <small>{{show.network}}</small></h1>
+
+
+{% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/d3/sentiment_graph.html' %}
+</div>
 
 {% endblock content %}
