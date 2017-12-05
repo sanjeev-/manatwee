@@ -64,7 +64,8 @@ class TwitterContent(models.Model):
     sentiment = models.CharField(max_length=120, blank=False,default='Neutral')
     
     def __unicode__(self):
-        return self.name
+        return self.text
+
 
     
     

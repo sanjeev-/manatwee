@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
+import pandas as pd
 
 from .models import Network, Show
 # Create your views here.
@@ -32,7 +33,12 @@ def showdetailfunc(request,slug):
             )
     show = show[0]
     tweet_sentiment_addr = "/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/static/content/"+str(show.name).replace(' ','_')+"/sentiment_graphs/twitterdata.csv"
-    context = {'show_list':show_list,'show':show,'tweet_sentiment_addr':tweet_sentiment_addr}
+    df = pd.read_csv(tweet_sentiment_addr)
+    twtr_score = float("{0:.2f}".format(df.NetPositive.iloc[-1]))
+    chg = float("{0:.2f}".format(df.NetPositive.iloc[-1]-df.NetPositive.iloc[-2]))
+    if chg>0:
+        chg = "+"+str(chg)
+    context = {'show_list':show_list,'show':show,'tweet_sentiment_addr':tweet_sentiment_addr,'twtr_score':twtr_score,'chg':chg}
     return render(request,template_name,context)
     
 

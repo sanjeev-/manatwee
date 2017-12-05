@@ -4,10 +4,12 @@
 {% block content %}
 
 <div class='container' id="d2">
-    <h1>{{show.name}} <small>{{show.network}}</small></h1>
+    <h1 class="text-left">{{show.name}} <small>{{show.network}}</small></h1>
+    <p></p>
 
 
 {% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/d3/sentiment_graph.html' %}
+    <h3  class="text-left">twitter sentiment score: <kbd>{{twtr_score}}</kbd> <small>({{chg}})</small></h3>
 </div>
 
 {% endblock content %}
