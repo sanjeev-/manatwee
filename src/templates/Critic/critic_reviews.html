@@ -1,0 +1,13 @@
+
+
+{% for doc in reviews %}
+<div class="panel panel-default">
+     <div class="panel-body">
+    <h4>{{doc.critic}}  <small>{{ doc.organization }}</small></h4>
+    
+        <p class={{doc.thumbsup}}>Sentiment: {{doc.thumbsup}}</p>
+        <p>{{doc.blurb}} </p><p><a href={{doc.review_url}}>link to review</a></p> </div>
+</div>
+{% endfor %}
+
+

@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from twttr.views import NetworkListView, ShowListView, ShowDetailView, HomeListView,AboutListView, ContactListView,homeviewfunc, aboutviewfunc, contactviewfunc,showdetailfunc
+from critic.views import movieviewfunc
 
 
 #from twttr.views import HomeView

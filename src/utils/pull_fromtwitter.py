@@ -14,6 +14,9 @@ import time
 from datetime import timedelta
 from datetime import datetime
 
+file = open('/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/utils/picklejar/last_run.pickle','rb')
+last_run_date = pickle.load(file)
+
 class HBO_Twitter_Sentiment(object):
     #The format of hashtagdict shall be as such:
     # { 'deuce' : [ * a list of all the hashtags to associate with the deuce * ]     }
@@ -34,6 +37,7 @@ class HBO_Twitter_Sentiment(object):
         print self.hashtagdict
         self.base_folder = base_folder
         self.since_date = since_date
+        
     
     def listToQuery(self,hashtag):
         if len(hashtag) == 1:
@@ -179,7 +183,7 @@ got = {'game_of_thrones':['#GameOfThrones']}
 
 ST_dict = {'stranger_things':'#StrangerThings'}
 
-dt = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
+dt = last_run_date.strftime('%Y-%m-%d')
 
 HBO = HBO_Twitter_Sentiment(HBO_Twitter_dict,'hbo',dt)
 Netflix = HBO_Twitter_Sentiment(Netflix_dict,'nflx',dt)
@@ -238,4 +242,9 @@ with open('/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/utils/pi
 with open('/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/utils/picklejar/TV_new.pickle', 'wb') as handle:
     pickle.dump(TV, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+run_date = datetime.now()
+    
+with open('/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/utils/picklejar/last_run.pickle', 'wb') as handle:
+    pickle.dump(run_date, handle, protocol=pickle.HIGHEST_PROTOCOL)    
+    
 

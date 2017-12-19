@@ -29,6 +29,8 @@ class Show(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)  
     slug = models.SlugField(null=True, blank=True)
+    twitter_score = models.FloatField(null=True,blank=True,default=0.0)
+    critics_score = models.FloatField(null=True,blank=True,default=0.0)
     
     def __unicode__(self):
         return self.name

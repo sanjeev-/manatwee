@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 import pandas as pd
+from critic.models import *
 
 from .models import Network, Show
 # Create your views here.
@@ -14,7 +15,8 @@ from .models import Network, Show
 
 def homeviewfunc(request):
     show_list = Show.objects.all()
-    return render(request,'base.html',{'show_list':show_list})
+    movie_list = Movie.objects.all()
+    return render(request,'base.html',{'show_list':show_list,'movie_list':movie_list})
 
 def aboutviewfunc(request):
     show_list = Show.objects.all()
@@ -25,21 +27,68 @@ def contactviewfunc(request):
     return render(request,'contact.html',{'show_list':show_list})
 
 def showdetailfunc(request,slug):
-    show_list = Show.objects.all()
+    show_list = Show.objects.filter(category='television')
+    movie_list = Show.objects.filter(category='movie')
+    review_list = Reviews.objects.all()
+    critics = Critic.objects.all()
     template_name = 'Twttr/show_detail.html'
-    show = Show.objects.filter(
-                Q(slug__iexact=slug) |
-                Q(slug__icontains=slug)
-            )
-    show = show[0]
-    tweet_sentiment_addr = "/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/static/content/"+str(show.name).replace(' ','_')+"/sentiment_graphs/twitterdata.csv"
-    df = pd.read_csv(tweet_sentiment_addr)
-    twtr_score = float("{0:.2f}".format(df.NetPositive.iloc[-1]))
-    chg = float("{0:.2f}".format(df.NetPositive.iloc[-1]-df.NetPositive.iloc[-2]))
-    if chg>0:
-        chg = "+"+str(chg)
-    context = {'show_list':show_list,'show':show,'tweet_sentiment_addr':tweet_sentiment_addr,'twtr_score':twtr_score,'chg':chg}
-    return render(request,template_name,context)
+    show_exists = Show.objects.filter(slug__iexact=slug)
+    movie_exists = Movie.objects.filter(slug__iexact=slug)
+
+    if movie_exists and show_exists:
+        
+        show = Show.objects.get(slug=slug)
+        
+
+        tweet_sentiment_addr = "/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/static/content/"+str(show.name).replace(' ','_')+"/sentiment_graphs/twitterdata.csv"
+        df = pd.read_csv(tweet_sentiment_addr)
+        twtr_score = float("{0:.2f}".format(df.NetPositive.iloc[-1]))
+        try:
+            chg = float("{0:.2f}".format(df.NetPositive.iloc[-1]-df.NetPositive.iloc[-2]))
+        except:
+            chg = 0
+        if chg>0:
+            chg = "+"+str(chg)
+        try: 
+            print 'it exists'
+            mymov = Movie.objects.get(slug__iexact=slug)
+            reviews = Reviews.objects.filter(movie=mymov)
+            template_name='Twttr/show_detail.html'
+        except:
+            reviews = 0
+            template_name='Twttr/show_detail.html'
+        context = {'show_list':show_list,'show':show,'tweet_sentiment_addr':tweet_sentiment_addr,'twtr_score':twtr_score,'chg':chg,'movie_list':movie_list,'reviews':reviews}
+        
+        return render(request,template_name,context)
+    
+    if movie_exists and not show_exists:
+        
+        mymov = Movie.objects.get(slug__iexact=slug)
+        reviews = Reviews.objects.filter(movie=mymov)
+        context = {'show_list':show_list,'movie_list':movie_list,'reviews':reviews}
+        return render(request,template_name,context)
+    
+    if show_exists and not movie_exists:
+        
+        show=Show.objects.get(slug=slug)
+        
+        tweet_sentiment_addr = "/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/static/content/"+str(show.name).replace(' ','_')+"/sentiment_graphs/twitterdata.csv"
+        df = pd.read_csv(tweet_sentiment_addr)
+        twtr_score = float("{0:.2f}".format(df.NetPositive.iloc[-1]))
+        try:
+            chg = float("{0:.2f}".format(df.NetPositive.iloc[-1]-df.NetPositive.iloc[-2]))
+        except:
+            chg = 0
+        if chg>0:
+            chg = "+"+str(chg)
+            
+        context = {'show_list':show_list,'show':show,'tweet_sentiment_addr':tweet_sentiment_addr,'twtr_score':twtr_score,'chg':chg,'movie_list':movie_list}
+        
+        return render(request,template_name,context)
+        
+        
+        
+        
     
 
 class NetworkListView(ListView):
