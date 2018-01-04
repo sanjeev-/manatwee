@@ -39,3 +39,8 @@ try:
     import variety
 except:
     print 'variety failed'
+
+try:
+    import chicagotribune
+except:
+    print 'chicagotribune failed'

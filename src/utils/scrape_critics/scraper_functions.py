@@ -63,14 +63,16 @@ def reviewsDictToDatabase(mydict,name_of_publication):
         print r_name
         
         mymovie = Movie.objects.get(name=r_name)
-        mycritic = Critic.objects.get(name=r_critic,organization=myOrg)
+        print r_critic
+        print myOrg
+        mycritic = Critic.objects.get(name=r_critic)
         
-        if Reviews.objects.filter(movie=Movie.objects.get(name=r_name),critic=Critic.objects.get(name=r_critic,organization=myOrg)).exists():
+        if Reviews.objects.filter(movie=Movie.objects.get(name=r_name),critic=Critic.objects.get(name=r_critic)).exists():
             print 'Review of %s from %s already exists!' % (r_name,r_critic)
         else:
             print 'adding review'
             mymov = Movie.objects.get(name=r_name)
-            mycritic = Critic.objects.get(name=r_critic,organization=myOrg)
+            mycritic = Critic.objects.get(name=r_critic)
             newReview = Reviews(movie=mymov,critic=mycritic,organization=myOrg,review_url=r_link,text = r_text, blurb = r_blurb, thumbsup = r_thumbsup, review_polarity = r_polarity, review_subjectivity = r_subjectivity)
             newReview.save()
         

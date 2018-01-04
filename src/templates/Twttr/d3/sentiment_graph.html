@@ -17,7 +17,7 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
-    
+
     
 </style>
 
@@ -68,6 +68,7 @@ var svg = d3.select("#d2")
         d.timeoftweet = parseDate(d.timeoftweet.substring(0,10));
         d.NetPositive = +d.NetPositive
         console.log(d)
+        console.log('this iis a test')
             });
         
     // Scale the range of the data
@@ -103,5 +104,3 @@ var svg = d3.select("#d2")
 
 
 </script>
-
-

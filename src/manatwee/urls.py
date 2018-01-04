@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from twttr.views import NetworkListView, ShowListView, ShowDetailView, HomeListView,AboutListView, ContactListView,homeviewfunc, aboutviewfunc, contactviewfunc,showdetailfunc
+from twttr.views import NetworkListView, ShowListView, ShowDetailView, HomeListView,AboutListView, ContactListView,homeviewfunc, aboutviewfunc, contactviewfunc,showdetailfunc,AutoCompleteView, search_func
 from critic.views import movieviewfunc
 
 
@@ -28,5 +28,8 @@ urlpatterns = [
     url(r'^about/$',aboutviewfunc),
     url(r'^contact/$',contactviewfunc),
     url(r'^network/$',NetworkListView.as_view()),
-    url(r'^show/(?P<slug>[\w-]+)/$',showdetailfunc),
+    url(r'^show/(?P<slug>[\w-]+)/$',showdetailfunc,name='showdetailfunc'),
+    url(r'^autocomplete/$',AutoCompleteView.as_view(), name='autocomplete'),
+    url(r'^search/$', search_func, name='search_func')
+    
 ]

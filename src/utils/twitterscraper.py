@@ -14,6 +14,7 @@ import seaborn as sns
 import time
 from datetime import timedelta
 from datetime import datetime
+import os.path
 
 def clean_tweet(tweet):
         #Utility function to clean tweet text by removing links, special characters
@@ -67,7 +68,28 @@ twitter_movie_dict = {
     'last_jedi':['#LastJedi'],
     
     'jumanji_welcome_to_the_jungle': ['#JUMANJI'],
+
+    'call_me_by_your_name':['#CallMeByYourName','Call Me By Your Name'],
+
+    'mollys_game':['#MollysGame'],
+
 }
+
+
+for key in twitter_movie_dict:
+
+    PATH = '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/movies/'
+    filename = key + '_sentiment.csv'
+    PATH = PATH + filename
+    if os.path.isfile(PATH):
+        df = pd.read_csv(PATH,names=['datetime','username','tweet'])
+    else:
+        print 'csv for %s doesnt exist!' % (key)
+        with open(PATH, "w") as my_empty_csv:
+              # now you have an empty file already
+            pass
+        print 'the csv for %s now exists' % (key)
+
 
 movies = HBO_Twitter_Sentiment(twitter_movie_dict,'movies',dt)    
     

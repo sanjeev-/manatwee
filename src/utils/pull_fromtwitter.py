@@ -194,17 +194,17 @@ ST = HBO_Twitter_Sentiment(ST_dict,'nflx',dt)
 
 try:
     HBO.fetch_tweet_sentiments()
-    time.sleep(90)
+    time.sleep(900)
 except:
     print "HBO has failed"
 try:        
     Netflix.fetch_tweet_sentiments()
-    time.sleep(90)
+    time.sleep(900)
 except:
     print "Netflix has failed"
 try:
     Amzn.fetch_tweet_sentiments()
-    time.sleep(90)
+    time.sleep(900)
 except:
     print "Amazon has failed"
 try:
@@ -214,13 +214,13 @@ except:
     print "Hulu has failed"
 try:
     GOT.fetch_tweet_sentiments()
-    time.sleep(90)
+    time.sleep(900)
 except:
     print "Game of thrones has failed"
 
 try:    
     ST.fetch_tweet_sentiments()
-    time.sleep(90)
+    time.sleep(900)
 except:
     print "ST has failed"
 

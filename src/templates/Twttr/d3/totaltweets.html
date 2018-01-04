@@ -1,0 +1,54 @@
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+<svg width="960" height="500"></svg>
+
+<script>
+var parseDate = d3.time.format("%Y-%m-%d").parse; 
+    
+var svg = d3.select("svg"),
+    margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+var twitteraddr = '{{tweet_sentiment_addr}}'    
+    
+// Set the ranges
+var xx = d3.time.scale().range([0, width]);
+var yy = d3.scale.linear().range([height, 0]);
+
+// Define the axes
+var xAxisBar = d3.svg.axis().scale(xx)
+    .orient("bottom").ticks(5);
+ 
+var yAxisBar = d3.svg.axis().scale(yy)
+    .orient("left").ticks(5);
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv(twitteraddr, function(data) {
+    
+    data.forEach(function(d){
+        console.log(d.timeoftweet.substring(0,10));
+        d.timeoftweet = parseDate(d.timeoftweet.substring(0,10));
+        d.TotalTweets = +d.TotalTweets
+        console.log(d)
+        console.log('this iis a test')
+            });
+
+});
+
+</script>
