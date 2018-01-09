@@ -44,3 +44,8 @@ try:
     import chicagotribune
 except:
     print 'chicagotribune failed'
+
+try:
+    import slate
+except:
+	print "slate failed"
