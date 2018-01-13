@@ -2,4 +2,14 @@
 
 {% block content %}
 <p> you can contact me at manatwee at gmail dot com</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit </button>
+</form>
+
+<h2> {{text}}</h2>
+
+
 {% endblock content %}

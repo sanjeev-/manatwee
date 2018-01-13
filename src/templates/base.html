@@ -12,8 +12,8 @@
     <div class='container' >
         <div class='row'>
             <div class='col-sm-2'> 
-
-                <p>search</p>
+                <p>hello {{request.user.username}} :) <a href='/login/'>login</a>  |  <a href='/logout/'>logout</a></p>
+                
                 <div  id="searchfield"><form method="get" action="/search/"><input name="searchquery" class="biginput" id="autocomplete"></form></div>
                 <p> movie </p>
             {% for movie in movie_list %}
@@ -34,6 +34,8 @@
 
     {% endblock content %}    
             </div>
+
+            
         </div>
 
     </div>

@@ -1,0 +1,171 @@
+
+<script>
+  // Set the dimensions of the canvas / graph
+var twitteraddr = '{{tweet_sentiment_addr}}'
+
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 360 - margin.left - margin.right,
+    height = 180 - margin.top - margin.bottom;
+    
+// Parse the date / time
+var parseDate = d3.time.format("%Y-%m-%d").parse;  
+    
+// Set the ranges
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+    
+//color
+var color = d3.scale.category10();
+
+// Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+ 
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+
+// Define the line
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.timeoftweet); })
+    .y(function(d) { return y(d.NetPositive); });  
+
+var lastNetPos = 0;    
+    // Adds the svg canvas
+var mysvg = d3.select("#d2")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+//d3.csv("/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/static/content/westworld/sentiment_graphs/twitterdata.csv", function(data) {
+
+    d3.csv(twitteraddr, function(data) {
+    
+    data.forEach(function(d){
+        console.log(d.timeoftweet.substring(0,10));
+        d.timeoftweet = parseDate(d.timeoftweet.substring(0,10));
+        d.NetPositive = +d.NetPositive
+        console.log(d)
+        console.log('this iis a test')
+            });
+        
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.timeoftweet; }));
+    y.domain([-100, 100]);
+    //    y.domain([d3.min(data, function(d) { return d.NetPositive; })-25, d3.max(data, function(d) { return d.NetPositive; })+25]);
+
+    // Add the valueline path.
+    mysvg.append("path")	
+        .attr("class", "line")
+        .attr("d", valueline(data));    
+
+    // Add the X Axis
+    mysvg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);  
+    
+    // Add the Y Axis
+    mysvg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);    
+    
+    mysvg.append("text")
+            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+            .attr("transform", "translate("+ (-margin.left/1.5) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+            .text("Twitter Sentiment");
+
+        lastNetPos = console.log(data.slice(-1)[0].NetPositive) 
+
+        var mouseG = svg.append("g")
+      .attr("class", "mouse-over-effects");
+
+    mouseG.append("path") // this is the black vertical line to follow mouse
+      .attr("class", "mouse-line")
+      .style("stroke", "black")
+      .style("stroke-width", "1px")
+      .style("opacity", "0");
+      
+    var lines = document.getElementsByClassName('line');
+
+    var mousePerLine = mouseG.selectAll('.mouse-per-line')
+      .data(data)
+      .enter()
+      .append("g")
+      .attr("class", "mouse-per-line");
+
+    mousePerLine.append("circle")
+      .attr("r", 7)
+      .style("stroke", function(d) {
+        return color(d.NetPositive);
+      })
+      .style("fill", "none")
+      .style("stroke-width", "1px")
+      .style("opacity", "0");
+
+    mousePerLine.append("text")
+      .attr("transform", "translate(10,3)");
+
+    mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
+      .attr('width', width) // can't catch mouse events on a g element
+      .attr('height', height)
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .on('mouseout', function() { // on mouse out hide line, circles and text
+        d3.select(".mouse-line")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "0");
+      })
+      .on('mouseover', function() { // on mouse in show line, circles and text
+        d3.select(".mouse-line")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "1");
+      })
+      .on('mousemove', function() { // mouse moving over canvas
+        var mouse = d3.mouse(this);
+        d3.select(".mouse-line")
+          .attr("d", function() {
+            var d = "M" + mouse[0] + "," + height;
+            d += " " + mouse[0] + "," + 0;
+            return d;
+          });
+
+        d3.selectAll(".mouse-per-line")
+          .attr("transform", function(d, i) {
+            console.log(width/mouse[0])
+            var xDate = x.invert(mouse[0]),
+                bisect = d3.bisector(function(d) { return d.timeoftweet; }).right;
+                idx = bisect(d.NetPositive, xDate);
+            
+            var beginning = 0,
+                end = lines[i].getTotalLength(),
+                target = null;
+
+            while (true){
+              target = Math.floor((beginning + end) / 2);
+              pos = lines[i].getPointAtLength(target);
+              if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                  break;
+              }
+              if (pos.x > mouse[0])      end = target;
+              else if (pos.x < mouse[0]) beginning = target;
+              else break; //position found
+            }
+            
+            d3.select(this).select('text')
+              .text(y.invert(pos.y).toFixed(2));
+              
+            return "translate(" + mouse[0] + "," + pos.y +")";
+          });
+    });
+});
+
+      
+  </script>

@@ -3,19 +3,36 @@
 
 {% block content %}
 
-<div class='container' id="d2">
+    <div class='row'>
+    <div class='col-sm-7' id="d3" >
     <h1 class="text-left">{{show.name}} <small>{{show.network}}</small></h1>
     <p></p>
 
 
-{% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/d3/sentiment_graph.html' %}
-    
-    
-    
-    <h3  class="text-left">twitter sentiment score: <kbd>{{twtr_score}}</kbd> <small>({{chg}})</small></h3>
+
     <h3  class="text-left">critic sentiment score: <kbd>{{critic_score}}%</kbd> <small>({{pos_revs}}/{{total_revs}})</small></h3>
 
-{% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Critic/critic_reviews.html' %}    
+        {% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/d3/interactive_twitter_graph.html' %}            
+        
+        
+{% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Critic/critic_reviews.html' %} 
+        
+        
 </div>
+
+
+        
+
+    <div class='col-sm-5' id="d2">
+        
+        {% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/d3/sentiment_graph.html' %}
+    
+        
+        <h3  class="text-left">twitter sentiment score: <kbd>{{twtr_score}}</kbd> <small>({{chg}})</small></h3>
+        
+           {% include '/home/ubuntu/cv/aerial/DeepNetsEO/DeepNetsForEO/nlp/site/src/templates/Twttr/social_media_sector.html' %}    
+        
+    </div>
+    </div>
 
 {% endblock content %}

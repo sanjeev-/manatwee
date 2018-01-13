@@ -4,10 +4,28 @@
 <div class="panel panel-default">
      <div class="panel-body">
     <h4>{{doc.critic}}  <small>{{ doc.organization }}</small></h4>
-    
+         <div class="btn-group">
+         <form method='POST'>
+         {% csrf_token %}
+         <input type="hidden" value="{{doc.critic}}" name="critic_name">
+         <input type="hidden" value="{{doc.movie}}" name="movie_name"> 
+         <input type="hidden" value="{{doc.organization}}" name="org_name">
+         <input type="hidden" value="1" name="markedsentiment">
+        <button id="posbutton" type="submit" class="btn btn-success btn-xs">+ </button>
+    </form>
+    <form method='POST'>
+         {% csrf_token %}
+         <input type="hidden" value="{{doc.critic}}" name="critic_name">
+         <input type="hidden" value="{{doc.movie}}" name="movie_name"> 
+         <input type="hidden" value="{{doc.organization}}" name="org_name">
+         <input type="hidden" value="0" name="markedsentiment">
+        <button id="negbutton" type="submit" class="btn btn-danger btn-xs"> - </button>
+    </form>
+         </div>
         <p class={{doc.thumbsup}}>Sentiment: {{doc.thumbsup}}</p>
         <p>{{doc.blurb}} </p><p><a href={{doc.review_url}}>link to review</a></p> </div>
 </div>
 {% endfor %}
 
 
+    

@@ -216,6 +216,8 @@ print 'checking and adding movie models'
 MoviecheckShowsAndNetworks(movie_dict)
                 
 print 'adding tv'
-pullfromTwitter(television_dict)
+#pullfromTwitter(television_dict)
+
+#time.sleep(900)
 print 'adding movies'
 pullfromTwitter(movie_dict)

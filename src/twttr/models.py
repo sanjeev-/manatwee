@@ -64,6 +64,8 @@ class TwitterContent(models.Model):
     timeoftweet = models.DateTimeField(auto_now=False,auto_now_add=False,default=right_now)
     slug = models.SlugField(null=True, blank=True)
     sentiment = models.CharField(max_length=120, blank=False,default='Neutral')
+    actual_sentiment = models.FloatField(null=True,blank=True)
+    RNN_sentiment = models.FloatField(null=True,blank=True)
     
     def __unicode__(self):
         return self.text

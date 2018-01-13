@@ -64,6 +64,8 @@ class Reviews(models.Model):
     text = models.TextField()
     blurb = models.TextField(null=True, blank=True)
     thumbsup = models.CharField(max_length=150,default='Positive')
+    actual_sentiment = models.FloatField(null=True,blank=True)
+    RNN_sentiment = models.FloatField(null=True,blank=True)
     
     def __unicode__(self):
         return self.text

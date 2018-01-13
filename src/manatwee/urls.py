@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from twttr.views import NetworkListView, ShowListView, ShowDetailView, HomeListView,AboutListView, ContactListView,homeviewfunc, aboutviewfunc, contactviewfunc,showdetailfunc,AutoCompleteView, search_func
 from critic.views import movieviewfunc
-
+from django.contrib.auth.views import login, logout
+from accounts.views import register_view_func
 
 #from twttr.views import HomeView
 
@@ -30,6 +31,9 @@ urlpatterns = [
     url(r'^network/$',NetworkListView.as_view()),
     url(r'^show/(?P<slug>[\w-]+)/$',showdetailfunc,name='showdetailfunc'),
     url(r'^autocomplete/$',AutoCompleteView.as_view(), name='autocomplete'),
-    url(r'^search/$', search_func, name='search_func')
-    
+    url(r'^search/$', search_func, name='search_func'),
+    url(r'^login/$', login,{'template_name':'Acct/login.html'}),
+    url(r'^logout/$',logout,{'template_name':'Acct/logout.html'}), 
+    url(r'^register/$',register_view_func,name='registry page'), 
+
 ]

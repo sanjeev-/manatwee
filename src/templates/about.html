@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='container'><p>my goal is to make a simple, clutter-free, and completely independent site for film & television sentiment aggregation & analysis</p>
+<div class='container'><p>i have two primary goals with this website.  foremost is to make a <mark>simple</mark>, <mark>clutter-free</mark>, and <mark>completely independent</mark> site for film & television sentiment aggregation & analysis</p>
 
-    <p>all twitter sentiment and movie reviews are scraped automatically and i use natural language processing and sentiment analysis to determine whether the review is positive or negative (via textblob)</p>
+    <p>the motivation behind this was the growing importance of rotten tomatoes and metacritic as review sites.  rt is owned by comcast and time warner, and metacritic is owned by cbs.  they are putatively independent but i dont think it would hurt to have an independent site. </p>
     
-    <p>the backend is in django, front end is bootstrap, and machine learning / analysis is done using the python ML toolkit (sklearn,nltk,pandas,etc)
-    </p>
+    <p> the second motivation for this website is to <mark>create and train a crowd-trained RNN (recurrent neural network) for sentiment analysis</mark>. current popular models are based off IMDB databases and this RNN has the ability to grow vastly larger thanks to crowd-sourced input.  </p>
+    
+    <p>if you would like access to the RNN weights and the training set, please dont hesitate to email me at <mark>manatwee at gmail dot com</mark>.  i am also more than happy to share bag of words features. </p>
+   
+    <p> simultaneously, im looking to build a <mark>collaborative filtering model</mark> using user data from reddit and twitter, to gain insight into real time pop culture tastes</p>
+    
+    <p>the backend is in django, front end is bootstrap, and the deep learning is done via keras and tensorflow </p>
+    
+    <p> the github for the site is here: <mark>xxxx</mark> </p>
     
     <p> the cute manatee pic is from austin673.  his deviant art is here: https://austin673.deviantart.com/</p>
 
